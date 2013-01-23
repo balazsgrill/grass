@@ -46,8 +46,8 @@ public class GrassViewer extends ContentViewer {
 	/**
 	 * 
 	 */
-	public GrassViewer(Composite parent) {
-		canvas = new FigureCanvas(parent);
+	public GrassViewer(Composite parent, int style) {
+		canvas = new FigureCanvas(parent, style);
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {

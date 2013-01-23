@@ -4,6 +4,7 @@ Bundle-Name: Grass (GRAphical Swt widget Set)
 Bundle-SymbolicName: hu.balazsgrill.grass
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.eclipse.draw2d,
- org.eclipse.jface,
- org.eclipse.core.databinding
+Require-Bundle: org.eclipse.draw2d;visibility:=reexport,
+ org.eclipse.jface;visibility:=reexport,
+ org.eclipse.core.databinding;visibility:=reexport
+Export-Package: hu.balazsgrill.grass

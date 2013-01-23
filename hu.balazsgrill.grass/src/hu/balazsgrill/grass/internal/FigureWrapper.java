@@ -62,6 +62,7 @@ public class FigureWrapper extends Figure {
 				FigureWrapper f = new FigureWrapper(de.getElement(), viewer, false);
 				this.add(f, de.getPosition());
 				subFigures.add(de.getPosition(), f);
+				f.update();
 			}else{
 				this.remove(subFigures.get(de.getPosition()));
 				subFigures.remove(de.getPosition());
