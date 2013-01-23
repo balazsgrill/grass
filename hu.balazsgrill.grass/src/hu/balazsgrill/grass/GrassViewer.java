@@ -11,8 +11,6 @@ import java.util.List;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Layer;
-import org.eclipse.draw2d.LayeredPane;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
@@ -39,9 +37,9 @@ public class GrassViewer extends ContentViewer {
 
 	private final List<IFigure> selectedFigures = new ArrayList<IFigure>();
 
-	private final LayeredPane layeredFigure = new LayeredPane();
-	private final Layer contentLayer = new Layer();
-	private final Layer connectionLayer = new Layer();
+	//private final LayeredPane layeredFigure = new LayeredPane();
+	//private final Layer contentLayer = new Layer();
+	//private final Layer connectionLayer = new Layer();
 
 	/**
 	 * 
@@ -77,9 +75,9 @@ public class GrassViewer extends ContentViewer {
 				super.mouseUp(e);
 			}
 		});
-		canvas.setContents(layeredFigure);
-		layeredFigure.add(contentLayer);
-		layeredFigure.add(connectionLayer);
+//		canvas.setContents(layeredFigure);
+//		layeredFigure.add(contentLayer);
+//		layeredFigure.add(connectionLayer);
 	}
 
 	@Override
@@ -140,14 +138,15 @@ public class GrassViewer extends ContentViewer {
 		if (lp != null && cp != null){
 			if (rootFigure != null){
 				if (!input.equals(rootFigure.getElement())){
-					contentLayer.remove(rootFigure);
+					//contentLayer.remove(rootFigure);
 					rootFigure = null;
 				}
 			}
 			
 			if (rootFigure == null){
 				rootFigure = new FigureWrapper(input, this, true);
-				contentLayer.add(rootFigure);
+				//contentLayer.add(rootFigure);
+				canvas.setContents(rootFigure);
 			}
 			
 			rootFigure.update();
