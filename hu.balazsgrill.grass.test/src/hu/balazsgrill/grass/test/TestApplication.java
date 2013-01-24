@@ -8,7 +8,8 @@ import hu.balazsgrill.grass.IGrassFigureProvider;
 
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -25,8 +26,11 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class TestApplication extends LabelProvider implements IApplication, IGrassFigureProvider, ITreeContentProvider {
 
-	private Object[] data1 = new Object[]{"A","B","C"};
-	private Object[] data2 = new Object[]{"1","2","3"};
+	private Object[] data1 = new Object[]{
+			new Rectangle(10, 10, 100, 100),
+			new Rectangle(20, 10, 200, 100),
+			new Rectangle(50, 10, 100, 100),
+	};
 	private Object input = "input";
 	
 	/* (non-Javadoc)
@@ -76,8 +80,6 @@ public class TestApplication extends LabelProvider implements IApplication, IGra
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		if ("A".equals(parentElement))
-		return data2;
 		return new Object[]{};
 	}
 
@@ -89,15 +91,23 @@ public class TestApplication extends LabelProvider implements IApplication, IGra
 
 	@Override
 	public boolean hasChildren(Object element) {
-		return ("A".equals(element)) || input.equals(element);
+		return element instanceof String;
 	}
 
 	@Override
 	public IFigure createFigure(Object element) {
-		Label figure = new Label();
-		figure.setText(element+"");
-		figure.setLayoutManager(new FlowLayout());
-		return figure;
+		if (element instanceof String){
+			RectangleFigure rf = new RectangleFigure();
+			rf.setLayoutManager(new FlowLayout());
+			return rf;
+		}
+		if (element instanceof Rectangle){
+			RectangleFigure rf = new RectangleFigure();
+			rf.setPreferredSize(((Rectangle) element).getSize());
+			return rf;
+		}
+		
+		return null;
 	}
 
 }

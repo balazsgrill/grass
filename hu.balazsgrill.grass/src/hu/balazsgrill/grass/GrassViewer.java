@@ -117,7 +117,8 @@ public class GrassViewer extends ContentViewer {
 		return computeSelection();
 	}
 	
-	public IGrassFigureProvider getFigureProvider() {
+	@Override
+	public IGrassFigureProvider getLabelProvider() {
 		IBaseLabelProvider lp = super.getLabelProvider();
 		return lp instanceof IGrassFigureProvider ? (IGrassFigureProvider) lp
 				: null;
@@ -131,11 +132,11 @@ public class GrassViewer extends ContentViewer {
 	@Override
 	public void refresh() {
 
-		IGrassFigureProvider lp = getFigureProvider();
+		IGrassFigureProvider lp = getLabelProvider();
 		ITreeContentProvider cp = getContentProvider();
 		Object input = getInput();
 
-		if (lp != null && cp != null){
+		if (lp != null && cp != null && input != null){
 			if (rootFigure != null){
 				if (!input.equals(rootFigure.getElement())){
 					//contentLayer.remove(rootFigure);
@@ -146,7 +147,7 @@ public class GrassViewer extends ContentViewer {
 			if (rootFigure == null){
 				rootFigure = new FigureWrapper(input, this, true);
 				//contentLayer.add(rootFigure);
-				canvas.setContents(rootFigure);
+				canvas.setContents(rootFigure.getFigure());
 			}
 			
 			rootFigure.update();
@@ -157,16 +158,17 @@ public class GrassViewer extends ContentViewer {
 	}
 
 	public void redraw() {
+		if (canvas.isDisposed()) return;
 		canvas.getViewport().invalidateTree();
 		canvas.getLightweightSystem().getUpdateManager()
 				.addInvalidFigure(canvas.getViewport());
 		canvas.getViewport().validate();
 
-		// canvas.getViewport().validate();
-		// canvas.getLightweightSystem().getUpdateManager().performUpdate();
+		canvas.getViewport().validate();
+		canvas.getLightweightSystem().getUpdateManager().performUpdate();
 		canvas.redraw();
 		// canvas.
-		// canvas.update();
+		canvas.update();
 	}
 
 //	private void setVisuals(IFigure f, FigureStates state) {
